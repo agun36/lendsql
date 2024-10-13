@@ -1,0 +1,41 @@
+.dashboard-aside {
+    min-width: 20.3rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.05);
+    min-height: 100vh;
+
+    h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin-bottom: 1rem;
+
+            a {
+                text-decoration: none;
+                color: inherit;
+                display: flex;
+                align-items: center;
+
+                i {
+                    margin-right: 0.5rem;
+                }
+
+                &.active-link {
+                    font-weight: bold;
+                    color: #007bff;
+                    /* Change to your desired active link color */
+                }
+            }
+        }
+    }
+}

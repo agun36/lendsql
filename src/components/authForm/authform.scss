@@ -1,0 +1,43 @@
+@import '../../assets/styles/variables/variables';
+
+.authform-user_form__details {
+    display: flex;
+    // justify-content: space-evenly;
+    align-items: center;
+    min-height: 100vh;
+    font-family: $lendsqr_regular;
+
+    .pablo-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-width: 50%;
+
+        .pablo-wrapper-logo {
+            position: absolute;
+            width: 17.376rem;
+            height: 3.6rem;
+            top: 10.6rem;
+            left: 15rem;
+            object-fit: background-cover;
+
+            @media(max-width: 1000px) {
+                top: 2rem;
+                left: 10rem;
+            }
+        }
+
+        .pablo-login {
+            width: 60rem;
+            height: 33.757rem;
+
+            @media(max-width: 1000px) {
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    @media (max-width: 1000px) {
+        flex-wrap: wrap;
+    }
+}

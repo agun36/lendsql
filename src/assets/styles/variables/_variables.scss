@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'AvenirNext-Bold';
+    font-weight: 700;
+    src: url('../../avenir/AvenirNext-Bold.otf')
+}
+
+
+
+@font-face {
+    font-weight: 400;
+    font-family: 'AvenirNext-Regular';
+    src: url('../../avenir/AvenirNext-Regular.otf')
+}
+
+
+$lendsqr_bold: "AvenirNext-Bold", "sans-serif";
+$lendsqr_regular: "AvenirNext-Regular", "sans-serif";
+
+$heading1: #213F7D;
+$text-details: #545F7D;
+
+$primary-000: #39CDCC;
+$warning: #E9B200;
+
+$success: #39CD62;
+$bg-avatar: #213F7D;
+
+$white-000: #FFFFFF;
+$black-000: #000000;
+
+// outline buttons collor
+$danger-001: #E4033B;
+$grey-000: #545F7D;
+
+
+$modal-bg-color: #fff;
+$modal-overlay-color: rgba(0, 0, 0, 0.5);
+$modal-border-radius: .8rem;
+$modal-padding: 2rem;
+$modal-close-font-size: 1.5rem;
+$modal-input-border-color: #545F7D;
+$modal-input-border-radius: .5rem;
+$modal-input-padding: 10px;
+$modal-btn-color: #fff;
+$modal-btn-border-radius: .5rem;
+$modal-btn-padding: 1rem;

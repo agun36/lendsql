@@ -1,0 +1,19 @@
+// create inputs style
+
+@import '../variables/variables';
+
+.input-control {
+    border-radius: 0.5rem;
+    font-size: 1.4rem;
+    text-align: left;
+    padding: 1rem;
+    min-width: 44.7rem;
+    display: flex;
+    align-items: center;
+    min-height: 5rem;
+    border: 0.2rem solid $grey-000;
+
+    @media (max-width: 1000px) {
+        min-width: 100%;
+    }
+}
