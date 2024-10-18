@@ -1,15 +1,13 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navigator from '../../components/navigator/navigator';
-import AsideComponent from '../../components/aside/aside';
-// import './userDashboard.scss';
 import UserTable from '../../components/userTable/userTable';
 import { User, UserTableProps } from '../../types/asideType';
 
 const statuses = ["Active", "Inactive", "Pending", "Blacklisted"];
 const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_REACT_VITE_TOKEN;
 
-export default function Users({ users, setUsers, filteredUsers, setFilteredUsers }: UserTableProps) {
+const Users: React.FC<UserTableProps> = ({ setUsers, filteredUsers, setFilteredUsers }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -44,16 +42,14 @@ export default function Users({ users, setUsers, filteredUsers, setFilteredUsers
         };
 
         fetchUsers();
-    }, []);
+    }, [setUsers, setFilteredUsers]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
 
     return (
         <div className="user-dashboard">
-            <Navigator users={users} setFilteredUsers={setFilteredUsers} />
             <div className="main-content">
-                <AsideComponent />
                 <UserTable
                     users={filteredUsers}
                     setUsers={setUsers}
@@ -64,3 +60,5 @@ export default function Users({ users, setUsers, filteredUsers, setFilteredUsers
         </div>
     );
 }
+
+export default Users;

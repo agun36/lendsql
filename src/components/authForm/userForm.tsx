@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import '../../assets/styles/base/_inputs.scss';
 import '../../assets/styles/base/_buttons.scss';
@@ -8,7 +9,7 @@ import { useNavigations } from '../../hooks/useNavigation';
 import showPassword from '../../hooks/showPassword';
 import { isValidEmail } from '../../hooks/handleLogin';
 
-export default function UserForm() {
+const UserForm: React.FC = () => {
     const {
         email,
         setEmail,
@@ -30,8 +31,6 @@ export default function UserForm() {
         isModalOpen,
         setIsModalOpen
     } = useNavigations();
-
-    // Basic email validation function
 
     const handleLogin = () => {
         setErrorMessage('');
@@ -66,6 +65,7 @@ export default function UserForm() {
         if (hasError) return;
 
         setSuccessMessage('Login successful!');
+        localStorage.setItem('username', email); // Save email in local storage
         setTimeout(() => {
             navigate('/dashboard');
         }, 1000);
@@ -143,3 +143,4 @@ export default function UserForm() {
         </aside>
     );
 }
+export default UserForm;

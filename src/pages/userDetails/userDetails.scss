@@ -1,0 +1,66 @@
+@import '../../assets/styles/variables/variables';
+
+.user-details {
+    // padding: 6rem;
+
+    .navigator {
+        margin-bottom: 2rem;
+    }
+
+    main {
+        display: flex;
+        flex-direction: row;
+        // gap: 2rem;
+
+        .aside-component {
+            flex: 1;
+        }
+
+        .user-info {
+            // flex: 3;
+            background-color: $white-000;
+            // padding: 2rem;
+            border-radius: 0.8rem;
+            box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+
+            h2 {
+                font-size: 2.4rem;
+                font-weight: 500;
+                margin-bottom: 2rem;
+                color: $heading1;
+            }
+
+            p {
+                font-size: 1.6rem;
+                margin-bottom: 1.5rem;
+
+                strong {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 1200px) {
+        main {
+            // flex-direction: column;
+
+            .user-info {
+                margin-top: 2rem;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 2rem;
+
+        main {
+            flex-direction: column;
+
+            .user-info {
+                margin-top: 2rem;
+                padding: 1rem;
+            }
+        }
+    }
+}

@@ -1,31 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './userTable.scss';
-import filterResult from '../../assets/filter-results-button.svg';
-import { UserTableProps } from '../../types/asideType';
+import filterResult from '../../assets/image/filter-results-button.svg';
+import { User, UserTableProps } from '../../types/asideType';
 import { getStatusClassName } from '../../libs/data';
-import icMore from '../../assets/ic-more-vert-18px.svg';
-import usersIcon from '../../assets/user-icon1.svg';
-import usersIcon2 from '../../assets/active-user.svg';
-import userWithLoan from '../../assets/loan-user.svg';
-import userSaving from '../../assets/user-saving.svg';
-import dropdown from '../../assets/dropdown-icon.svg';
-import { NavLink, useNavigate } from 'react-router-dom';
-import checkuser from '../../assets/check_user.svg';
-import eye from '../../assets/eyes.svg';
-import delete_friend from '../../assets/delete_friend.svg';
+import icMore from '../../assets/image/ic-more-vert-18px.svg';
+import usersIcon from '../../assets/image/user-icon1.svg';
+import usersIcon2 from '../../assets/image/active-user.svg';
+import userWithLoan from '../../assets/image/loan-user.svg';
+import userSaving from '../../assets/image/user-saving.svg';
+import dropdown from '../../assets/image/dropdown-icon.svg';
+import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import checkuser from '../../assets/image/check_user.svg';
+import eye from '../../assets/image/eyes.svg';
+import delete_friend from '../../assets/image/delete_friend.svg';
+import next from '../../assets/image/next.svg';
+import previous from '../../assets/image/previous.svg';
 
 const UserTable: React.FC<UserTableProps> = ({ users }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [showDropdown, setShowDropdown] = useState(false);
     const [actionMenuUserId, setActionMenuUserId] = useState<string | null>(null); // To handle action menu visibility
+    const [filterDropdown, setFilterDropdown] = useState<string | null>(null); // To handle filter dropdown visibility
+    const [filters, setFilters] = useState({
+        organization: '',
+        username: '',
+        email: '',
+        phone: '',
+        dateJoined: '',
+        status: ''
+    });
+    const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
     const usersPerPage = 9;
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const totalUsers = users.length;
-    const activeUsers = users.filter(user => user.status === 'Active').length;
-    const usersWithLoan = users.filter(user => user.loans && user.loans.length > 0).length;
+    useEffect(() => {
+        setFilteredUsers(users);
+    }, [users]);
 
-    const totalLoanAmount = users.reduce((total, user) => {
+    const totalUsers = filteredUsers.length;
+    const activeUsers = filteredUsers.filter(user => user.status === 'Active').length;
+    const usersWithLoan = filteredUsers.filter(user => user.loans && user.loans.length > 0).length;
+
+    const totalLoanAmount = filteredUsers.reduce((total, user) => {
         if (user.loans && user.loans.length > 0) {
             const userLoanTotal = Array.isArray(user.loans) ? user.loans.reduce((sum, loan) => sum + loan.loanAmount, 0) : 0;
             return total + userLoanTotal;
@@ -35,7 +52,7 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
 
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfFirstUser + usersPerPage);
 
     const handlePageChange = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -71,10 +88,121 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
         pageNumbers.push(i);
     }
 
+    const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            [name]: value
+        }));
+    };
+
+    const resetFilters = () => {
+        setFilters({
+            organization: '',
+            username: '',
+            email: '',
+            phone: '',
+            dateJoined: '',
+            status: ''
+        });
+        setFilteredUsers(users);
+    };
+
+    const applyFilters = () => {
+        let filtered = users;
+
+        if (filters.organization) {
+            filtered = filtered.filter(user => user.profile.company.toLowerCase().includes(filters.organization.toLowerCase()));
+        }
+        if (filters.username) {
+            console.log(`Filtering by username: ${filters.username}`);
+            filtered = filtered.filter(user => user.username.toLowerCase().includes(filters.username.toLowerCase()));
+        }
+        if (filters.email) {
+            filtered = filtered.filter(user => user.email.toLowerCase().includes(filters.email.toLowerCase()));
+        }
+        if (filters.phone) {
+            filtered = filtered.filter(user => user.phone && user.phone.includes(filters.phone));
+        }
+        if (filters.dateJoined) {
+            filtered = filtered.filter(user => new Date(user.createdAt).toLocaleDateString() === new Date(filters.dateJoined).toLocaleDateString());
+        }
+        if (filters.status) {
+            filtered = filtered.filter(user => user.status === filters.status);
+        }
+
+        console.log(`Filtered users: ${JSON.stringify(filtered)}`);
+        setFilteredUsers(filtered);
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const renderPageNumbers = () => {
+        const pageNumbers = [];
+        const totalPagesToShow = 5;
+        const startPage = Math.max(1, currentPage - Math.floor(totalPagesToShow / 2));
+        const endPage = Math.min(totalPages, startPage + totalPagesToShow - 1);
+
+        for (let i = startPage; i <= endPage; i++) {
+            pageNumbers.push(
+                <li
+                    key={i}
+                    onClick={() => handlePageChange(i)}
+                    className={i === currentPage ? 'active' : ''}
+                >
+                    {i}
+                </li>
+            );
+        }
+
+        if (startPage > 1) {
+            pageNumbers.unshift(<span key="start-ellipsis">...</span>);
+            pageNumbers.unshift(
+                <button key={1} onClick={() => handlePageChange(1)}>
+                    1
+                </button>
+            );
+        }
+
+        if (endPage < totalPages) {
+            pageNumbers.push(<span key="end-ellipsis">...</span>);
+            pageNumbers.push(
+                <button key={totalPages} onClick={() => handlePageChange(totalPages)}>
+                    {totalPages}
+                </button>
+            );
+        }
+
+        return pageNumbers;
+    };
+
+    const getHeaderTitle = () => {
+        switch (location.pathname) {
+            case '/dashboard':
+                return 'Dashboard';
+            case '/customers/users':
+                return 'Users';
+            case '/user/:userId':
+                return 'User Details';
+            default:
+                return 'Users';
+        }
+    };
+
     return (
-        <main className="user-table_container container">
+        <div className="user-table_container container">
             <header className="user-table_container_header">
-                <h2>Users </h2>
+                <h5>{getHeaderTitle()}</h5>
                 <div className="cards">
                     <div className="card">
                         <img src={usersIcon} alt="Total Users" />
@@ -101,12 +229,77 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
 
             <section className="user-table_container_body">
                 <ul className="user-table-header">
-                    <li>Organization <img src={filterResult} alt="showing filter icon" /></li>
-                    <li>Username <img src={filterResult} alt="showing filter icon" /></li>
-                    <li>Email <img src={filterResult} alt="showing filter icon" /></li>
-                    <li>Phone Number <img src={filterResult} alt="showing filter icon" /></li>
-                    <li>Date Joined <img src={filterResult} alt="showing filter icon" /></li>
-                    <li>Status <img src={filterResult} alt="showing filter icon" /></li>
+                    {['Organization', 'Username', 'Email', 'Phone Number', 'Date Joined', 'Status'].map((header, index) => (
+                        <li key={index}>
+                            {header} <img src={filterResult} alt="showing filter icon" onClick={() => setFilterDropdown(filterDropdown === header ? null : header)} />
+                            {filterDropdown === header && (
+                                <div className="filter-dropdown">
+                                    {header === 'Organization' ? (
+                                        <select
+                                            name="organization"
+                                            value={filters.organization}
+                                            onChange={handleFilterChange}
+                                        >
+                                            <option value="">Select Organization</option>
+                                            {/* Add options dynamically based on available organizations */}
+                                            {[...new Set(users.map(user => user.profile.company))].slice(0, 10).map((organization, idx) => (
+                                                <option key={idx} value={organization}>
+                                                    {organization}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    ) : header === 'Username' ? (
+                                        <input
+                                            type="text"
+                                            name="username"
+                                            value={filters.username}
+                                            onChange={handleFilterChange}
+                                            placeholder="Username"
+                                        />
+                                    ) : header === 'Email' ? (
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={filters.email}
+                                            onChange={handleFilterChange}
+                                            placeholder="Email"
+                                        />
+                                    ) : header === 'Phone Number' ? (
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            value={filters.phone}
+                                            onChange={handleFilterChange}
+                                            placeholder="Phone Number"
+                                        />
+                                    ) : header === 'Date Joined' ? (
+                                        <input
+                                            type="date"
+                                            name="dateJoined"
+                                            value={filters.dateJoined}
+                                            onChange={handleFilterChange}
+                                            placeholder="Date Joined"
+                                        />
+                                    ) : header === 'Status' ? (
+                                        <select
+                                            name="status"
+                                            value={filters.status}
+                                            onChange={handleFilterChange}
+                                        >
+                                            <option value="">Select Status</option>
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                            <option value="Blacklisted">Blacklisted</option>
+                                        </select>
+                                    ) : null}
+                                    <div className="btn-container">
+                                        <button onClick={resetFilters} className='btn-outline-sm btn-reset'>Reset</button>
+                                        <button onClick={applyFilters} className='btn-xsm'>Filter</button>
+                                    </div>
+                                </div>
+                            )}
+                        </li>
+                    ))}
                 </ul>
 
                 {currentUsers.map((user) => (
@@ -121,7 +314,7 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
                             <img
                                 onClick={() => handleActionMenuToggle(user.id)}
                                 src={icMore}
-                                alt="action menu icon"
+                                alt="action"
                             />
                             {actionMenuUserId === user.id && (
                                 <ul className="action-menu">
@@ -141,34 +334,49 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
                 ))}
             </section>
 
-            {/* Pagination Button with Dropdown */}
-            <div className="user-table_container_pagination">
-                <div className="user-table_container_pagination-button-group">
-                    <p>Showing</p>
-                    <button
-                        onClick={() => setShowDropdown(!showDropdown)}
-                        className="pagination-button"
-                    >
-                        {currentPage} <span className="dropdown-icon"><img src={dropdown} alt="" /></span>
-                    </button>
-                    <p>out of {totalPages}</p>
+            <div className='user-table_container_pagination_controls'>
+                {/* Pagination Button with Dropdown */}
+                <div className="user-table_container_pagination_controls_dropdown">
+                    <div className="user-table_container_pagination-button-group">
+                        <p>Showing</p>
+                        <button
+                            onClick={() => setShowDropdown(!showDropdown)}
+                            className="pagination-button"
+                        >
+                            {currentPage} <span className="dropdown-icon"><img src={dropdown} alt="" /></span>
+                        </button>
+                        <p>out of {totalPages}</p>
+                    </div>
+
+                    {showDropdown && (
+                        <div className="dropdown-menu ">
+                            {pageNumbers.map(number => (
+                                <button
+                                    key={number}
+                                    onClick={() => handlePageChange(number)}
+                                    className={number === currentPage ? 'active' : ''}
+                                >
+                                    {number}
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
-                {showDropdown && (
-                    <div className="dropdown-menu">
-                        {pageNumbers.map(number => (
-                            <button
-                                key={number}
-                                onClick={() => handlePageChange(number)}
-                                className={number === currentPage ? 'active' : ''}
-                            >
-                                {number}
-                            </button>
-                        ))}
-                    </div>
-                )}
+                {/* Previous and Next buttons */}
+                <div className="pagination-controls">
+                    <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                        <img src={next} alt="showing next page icon" />
+                    </button>
+                    <ul className="pagination-controls_page-numbers">
+                        {renderPageNumbers()}
+                    </ul>
+                    <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                        <img src={previous} alt="showing previous page icon" />
+                    </button>
+                </div>
             </div>
-        </main>
+        </div>
     );
 };
 

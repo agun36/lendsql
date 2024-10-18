@@ -1,0 +1,21 @@
+.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    img {
+        object-fit: contain;
+        width: 20rem;
+        margin-top: 8rem;
+    }
+
+    p {
+        margin-top: 3rem;
+        font-size: 3rem;
+        color: rgba(57, 205, 204, 1);
+        line-height: 1.688rem;
+        font-weight: 600;
+        font-family: 'Work Sans', sans-serif;
+    }
+}

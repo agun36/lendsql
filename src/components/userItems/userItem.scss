@@ -1,0 +1,278 @@
+@import '../../assets//styles/variables/variables.scss';
+
+.user-details_container {
+    padding: 1rem;
+    // background-color: red;
+
+    .back_to_users {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        height: 1.52rem;
+
+        button {
+            background: none;
+            // width: .3rem;
+            // height: .3rem;
+            padding: 10.31px 1.41px 10.31px 1.88px;
+        }
+
+        h3 {
+            font-family: Work Sans;
+            font-size: 1.6rem;
+            font-weight: 400;
+            line-height: 1.877rem;
+            text-align: left;
+
+        }
+    }
+
+    .user-details_sub {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+
+
+        .user-details_title {
+            font-family: Work Sans;
+            font-size: 2.4rem;
+            font-weight: 500;
+            line-height: 2.815rem;
+            text-align: left;
+            color: $heading1;
+        }
+
+        .user-details_button_group {
+            display: flex;
+            gap: 2rem;
+        }
+    }
+
+    .user-details_tab {
+        box-shadow: .3rem .5rem 2rem 0rem #0000000A;
+        margin-top: 1rem;
+
+        .user-details_tab_links {
+            font-family: 'SF Compact Display', sans-serif;
+            text-align: center;
+            font-weight: 400;
+            line-height: 1.877rem;
+            text-align: center;
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: scroll;
+            // margin-top: 3.5rem;
+
+            &::-webkit-scrollbar {
+                height: 0.9rem;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: transparent;
+                width: .9rem;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: $primary-000;
+                border-radius: 5rem;
+            }
+
+            p {
+                cursor: pointer;
+                font-size: 1.6rem;
+                min-width: 12rem;
+                padding: .8rem 1.6rem;
+                border: none;
+                background: none;
+                color: rgba($color: #000000, $alpha: 80%);
+
+
+                &.active {
+                    font-weight: bold;
+                    color: $primary-000;
+                    border-bottom: 2px solid $primary-000;
+                }
+
+                &:hover {
+                    color: $primary-000;
+                }
+            }
+        }
+
+        .user-details {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem 2rem;
+        }
+
+        .user {
+
+            h6 {
+                font-family: Work Sans;
+                font-size: 2.2rem;
+                font-weight: 500;
+                line-height: 2.581rem;
+                text-align: left;
+                color: $heading1;
+                margin-bottom: .8rem;
+            }
+
+            p {
+                font-family: Work Sans;
+                font-size: 1.4rem;
+                font-weight: 400;
+                line-height: 1.642rem;
+                text-align: left;
+                color: $grey-000;
+            }
+        }
+
+
+        .user-rating {
+            p {
+                font-family: Work Sans;
+                font-size: 1.4rem;
+                font-weight: 500;
+                line-height: 1.642rem;
+                text-align: left;
+                color: $grey-000;
+                margin-bottom: .8rem;
+            }
+        }
+
+        .user-total-amount {
+
+            h6 {
+                font-family: Work Sans;
+                font-size: 2.2rem;
+                font-weight: 500;
+                line-height: 2.581rem;
+                text-align: left;
+                color: $heading1;
+                margin-bottom: .8rem;
+            }
+
+            p {
+                font-family: Work Sans;
+                font-size: 1.4rem;
+                font-weight: 400;
+                line-height: 1.642rem;
+                text-align: left;
+                color: $grey-000;
+            }
+        }
+    }
+
+    .user-detailsTabSelect {
+        // margin-top: 3rem;
+    }
+
+}
+
+.general-info {
+    padding: 3rem 0rem;
+    box-shadow: .3rem .5rem 2rem 0 #0000000A;
+    border-radius: .4rem;
+
+    h4 {
+        font-family: 'Work Sans', sans-serif;
+        // margin-left: 2rem;
+        font-size: 1.6rem;
+        font-weight: 500;
+        line-height: 1.877rem;
+        color: $heading1;
+    }
+
+    padding: 3rem;
+
+    .personal-info {
+        border-bottom: .1rem solid rgba($grey-000, 0.1);
+
+        .personal-info_head {
+            display: grid;
+            gap: 3rem;
+            grid-template-columns: repeat(5, 1fr);
+            padding-block: 2rem;
+
+            .personal-info_details {
+
+                h5 {
+                    font-family: 'Work Sans', sans-serif;
+                    font-size: 1.2rem;
+                    font-weight: 400;
+                    line-height: 1.877rem;
+                    text-align: left;
+                    color: $grey-000;
+                }
+
+                p {
+                    font-family: 'Work Sans', sans-serif;
+                    font-size: 1.6rem;
+                    font-weight: 500;
+                    line-height: 18.77px;
+                    text-align: left;
+
+
+                }
+            }
+        }
+
+
+
+
+        @media (max-width: 1200px) {
+            grid-template-columns: repeat(3, 1fr);
+
+            .general-info {
+                padding: 2rem;
+            }
+
+            .user-details_tab_links {
+                margin-top: 2rem;
+            }
+
+            .user-details {
+                gap: 1rem;
+            }
+
+            .user-details_tab {
+                margin-top: 2rem;
+            }
+
+            .user-details_sub {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .user-details_title {
+                font-size: 2rem;
+            }
+
+            .user-details_button_group {
+                gap: 1rem;
+            }
+
+            .user-detailsTabSelect {
+                margin-top: 2rem;
+            }
+
+            .personal-info {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+
+            }
+        }
+
+        @media (max-width: 768px) {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+        }
+
+        @media (max-width: 576px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(2, 1fr);
+        }
+    }
+}

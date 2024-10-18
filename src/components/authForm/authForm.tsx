@@ -1,7 +1,9 @@
-import logo from '../../assets/logo.svg'
-import pabloLogin from '../../assets/pablo-sign-in.svg'
+import React from 'react'
+import logo from '../../assets/image/logo.svg'
+import pabloLogin from '../../assets/image/pablo-sign-in.svg'
 import UserForm from './userForm'
-export default function AuthForm() {
+import './authform.scss'
+const AuthForm: React.FC = () => {
     return <section className="authform-user_form__details container">
         <aside className="pablo-wrapper container">
             <img src={logo} alt="showing the company name" className='pablo-wrapper-logo' />
@@ -10,3 +12,5 @@ export default function AuthForm() {
         <UserForm />
     </section>
 }
+
+export default AuthForm

@@ -3,15 +3,50 @@
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 2rem 3rem;
+    align-items: center;
+    height: 10rem;
     flex-wrap: wrap;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.05);
+    box-shadow: 3px 0px 20px 0px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2222;
+    margin-left: 2rem;
+    margin-right: 2rem;
+
+    @media (max-width: 1200px) {
+        padding: 2rem;
+
+    }
 
     &-nav {
         display: flex;
         flex-wrap: wrap;
 
-        column-gap: 12rem
+        .header-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        column-gap: 12rem;
+
+        .header-nav_hamburger {
+            display: none;
+
+            @media screen and (max-width: 1200px) {
+                display: block;
+                position: absolute;
+                right: 0;
+                margin-right: 2rem;
+
+                .mobile-hide-button {
+                    display: none;
+                }
+
+            }
+        }
     }
 
     &-nav-logo {

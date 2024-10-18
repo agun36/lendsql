@@ -1,3 +1,4 @@
+import React from 'react';
 import '../../assets/styles/base/_inputs.scss';
 import '../../assets/styles/base/_buttons.scss';
 import '../../assets/styles/variables/_variables.scss';
@@ -8,7 +9,7 @@ import { ModalProps } from '../../types/forgotPassword';
 
 
 
-export default function ForgotPasswordModal({ isOpen, onClose, onSubmit }: ModalProps) {
+const ForgotPasswordModal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit }) => {
     const [email, setEmail] = useState('');
 
     if (!isOpen) return null;
@@ -32,3 +33,5 @@ export default function ForgotPasswordModal({ isOpen, onClose, onSubmit }: Modal
         </div>
     );
 }
+
+export default ForgotPasswordModal;

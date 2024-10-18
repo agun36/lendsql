@@ -36,7 +36,7 @@ html::-webkit-scrollbar-track {
 }
 
 html::-webkit-scrollbar-thumb {
-    background: #9d9d9d;
+    background: $primary-000;
     border-radius: 5rem;
 }
 
@@ -51,9 +51,10 @@ body {
 }
 
 body {
-
+    font-family: "Work Sans", sans-serif;
     font-weight: 400;
     color: $black-000;
+    background: rgba(255, 255, 255, 1);
 }
 
 h1 {
@@ -77,11 +78,11 @@ h1 {
     }
 
     @media (min-width: 540px) {
-        max-width: 90%;
+        max-width: 100%;
     }
 
     @media (min-width: 768px) and (max-width: 900px) {
-        max-width: 90%;
+        max-width: 95%;
     }
 
     @media (min-width: 1060px) {
@@ -113,8 +114,22 @@ h1 {
     }
 }
 
-.d-none {
-    @media (max-width: 1000px) {
+.mobile-hide {
+    @media (max-width: 1200px) {
         display: none;
+    }
+}
+
+.main-content {
+    display: flex;
+}
+
+.content {
+    margin-top: 14rem;
+
+    // width: 100%;
+    @media (min-width: 1200px) {
+        margin-top: 14rem;
+        width: calc(100% + 28.3rem);
     }
 }
