@@ -326,7 +326,7 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
                                     />
                                     {/* {actionMenuUserId === user.id && ( */}
                                     <ul className="action-menu">
-                                        <li onClick={() => activateUser(user.id)}>
+                                        <li onClick={() => activateUser()}>
                                             <NavLink to='#'> <img src={eye} alt="" /> Activate</NavLink>
                                         </li>
                                         <li onClick={() => blacklistUser(user.id)}>
