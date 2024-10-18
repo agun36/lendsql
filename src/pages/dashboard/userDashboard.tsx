@@ -6,7 +6,7 @@ import UserTable from '../../components/userTable/userTable';
 import { User, UserTableProps } from '../../types/asideType';
 
 const statuses = ["Active", "Inactive", "Pending", "Blacklisted"];
-const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_REACT_APP_TOKEN;
+const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_API_KEY;
 
 const UserDashboard: React.FC<UserTableProps> = ({ setUsers, filteredUsers, setFilteredUsers }) => {
     const [loading, setLoading] = useState(true);
@@ -15,7 +15,7 @@ const UserDashboard: React.FC<UserTableProps> = ({ setUsers, filteredUsers, setF
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+                const apiUrl = import.meta.env.VITE_API_URL;
                 console.log('API URL:', apiUrl);
                 const response = await axios.get<User[]>(
                     apiUrl!,
