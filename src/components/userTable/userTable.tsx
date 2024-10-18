@@ -69,7 +69,7 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
 
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const activateUser = (userId: string) => {
+    const activateUser = () => {
         setActionMenuUserId(null);
     };
 
