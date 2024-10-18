@@ -13,7 +13,7 @@ import UserDetails from './pages/userDetails/userDetails';
 import Placeholder from './pages/placeholder/Placeholder';
 
 const statuses = ["Active", "Inactive", "Pending", "Blacklisted"];
-const dataToken = import.meta.env.PROD ? null : import.meta.env.REACT_VITE_TOKEN;
+const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_REACT_VITE_TOKEN;
 
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -25,7 +25,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const apiUrl = import.meta.env.REACT_APP_API_URL;
+        const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
         console.log('API URL:', apiUrl);
         const response = await axios.get<User[]>(
           apiUrl!,
