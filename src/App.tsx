@@ -13,7 +13,7 @@ import UserDetails from './pages/userDetails/userDetails';
 import Placeholder from './pages/placeholder/Placeholder';
 
 const statuses = ["Active", "Inactive", "Pending", "Blacklisted"];
-const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_REACT_VITE_TOKEN;
+const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_REACT_APP_TOKEN;
 
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);

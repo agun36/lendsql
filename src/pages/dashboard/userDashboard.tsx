@@ -6,7 +6,7 @@ import UserTable from '../../components/userTable/userTable';
 import { User, UserTableProps } from '../../types/asideType';
 
 const statuses = ["Active", "Inactive", "Pending", "Blacklisted"];
-const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_REACT_VITE_TOKEN;
+const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_REACT_APP_TOKEN;
 
 const UserDashboard: React.FC<UserTableProps> = ({ setUsers, filteredUsers, setFilteredUsers }) => {
     const [loading, setLoading] = useState(true);
