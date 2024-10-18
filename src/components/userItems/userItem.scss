@@ -2,7 +2,6 @@
 
 .user-details_container {
     padding: 1rem;
-    // background-color: red;
 
     .back_to_users {
         display: flex;
@@ -12,9 +11,7 @@
 
         button {
             background: none;
-            // width: .3rem;
-            // height: .3rem;
-            padding: 10.31px 1.41px 10.31px 1.88px;
+            padding: 1.031rem .141rem 1.031rem .188rem;
         }
 
         h3 {
@@ -165,9 +162,7 @@
         }
     }
 
-    .user-detailsTabSelect {
-        // margin-top: 3rem;
-    }
+
 
 }
 

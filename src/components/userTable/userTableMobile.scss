@@ -1,0 +1,84 @@
+@import '../../assets/styles/variables/variables';
+
+.user-table-mobile {
+    .user-card {
+        background-color: $white-000;
+        border: .1rem solid $grey-000;
+        border-radius: .8rem;
+        padding: 1.6rem;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 .2rem .5rem rgba(0, 0, 0, 0.1);
+
+        .user-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .user-card-header-info {
+                display: flex;
+                flex-direction: column;
+                color: rgba($grey-000, 1);
+                font-family: 'Work Sans', sans-serif;
+                font-size: 1.2rem;
+                font-weight: 600;
+                line-height: 1.408rem;
+                text-align: left;
+
+            }
+
+            .toggle-details {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                color: $primary-000;
+                font-size: 2rem;
+            }
+        }
+
+        .user-card-details {
+            margin-top: 1.2rem;
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            line-height: 1.642rem;
+            text-align: left;
+
+            line-height: 1.5;
+
+            p {
+                margin: 4px 0;
+
+                strong {
+                    font-family: 'Work Sans', sans-serif;
+                    font-size: 1.4rem;
+                    font-weight: 500;
+                    line-height: 1.642rem;
+                    text-align: left;
+
+                }
+            }
+        }
+    }
+
+    // Mobile-specific styles
+    @media (max-width: 768px) {
+        .mobile-hide {
+            display: none;
+        }
+
+        .mobile-show {
+            display: block;
+        }
+    }
+
+    // Tablet and above
+    @media (min-width: 769px) {
+        .mobile-hide {
+            display: block;
+        }
+
+        .mobile-show {
+            display: none;
+        }
+    }
+}

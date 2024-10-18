@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const useNavigations = () => {
     const [email, setEmail] = useState('');
@@ -12,6 +12,19 @@ export const useNavigations = () => {
     const [passwordSuccess, setPasswordSuccess] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [actionMenuUserId, setActionMenuUserId] = useState<string | null>(null);
+    const [filterDropdown, setFilterDropdown] = useState<string | null>(null);
+    const location = useLocation();
+    const [filters, setFilters] = useState({
+        organization: '',
+        username: '',
+        email: '',
+        phone: '',
+        dateJoined: '',
+        status: ''
+    });
 
     return {
         email,
@@ -32,6 +45,17 @@ export const useNavigations = () => {
         setPasswordSuccess,
         isModalOpen,
         setIsModalOpen,
-        navigate
+        navigate,
+        currentPage,
+        setCurrentPage,
+        showDropdown,
+        setShowDropdown,
+        actionMenuUserId,
+        setActionMenuUserId,
+        filterDropdown,
+        setFilterDropdown,
+        location,
+        filters,
+        setFilters,
     }
 }

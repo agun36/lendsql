@@ -68,7 +68,7 @@ export default function Navigator({ users, setFilteredUsers }: NavigatorProps) {
                     <img src={profile} alt="showing profile users" className="header-profile-avater mobile-hide" />
                     <p className='mobile-hide'>{username} <img src={dropdown} alt="showing logout button" onClick={handleLogout} /></p>
                     <button className="header-nav_hamburger mobile-show" onClick={toggleMobileAside}>
-                        <FontAwesomeIcon icon={faBars} />
+                        <FontAwesomeIcon icon={faBars} className='header-nav_hamburger_icon' />
                     </button>
                 </nav>
             </div>

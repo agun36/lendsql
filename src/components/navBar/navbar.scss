@@ -33,6 +33,7 @@
         .header-profile {
             display: flex;
             align-items: center;
+
         }
 
         column-gap: 12rem;
@@ -40,11 +41,12 @@
         .header-nav_hamburger {
             display: none;
 
+
             @media screen and (max-width: 1200px) {
                 display: block;
                 position: absolute;
                 right: 0;
-                margin-right: 2rem;
+
 
                 .mobile-hide-button {
                     display: none;
@@ -124,6 +126,16 @@
             line-height: 1.877rem;
             display: flex;
             align-items: center;
+        }
+
+        .header-nav_hamburger {
+            color: $primary-000;
+
+            &.header-nav_hamburger_icon {
+                color: $primary-000;
+            }
+
+
         }
     }
 }

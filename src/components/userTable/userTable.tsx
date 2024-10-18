@@ -9,30 +9,34 @@ import usersIcon2 from '../../assets/image/active-user.svg';
 import userWithLoan from '../../assets/image/loan-user.svg';
 import userSaving from '../../assets/image/user-saving.svg';
 import dropdown from '../../assets/image/dropdown-icon.svg';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import checkuser from '../../assets/image/check_user.svg';
 import eye from '../../assets/image/eyes.svg';
 import delete_friend from '../../assets/image/delete_friend.svg';
 import next from '../../assets/image/next.svg';
 import previous from '../../assets/image/previous.svg';
-
+import '../../assets/styles/tables.scss';
+import UserTableMobile from './userTableMobile';
+import { useNavigations } from '../../hooks/useNavigation';
 const UserTable: React.FC<UserTableProps> = ({ users }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [showDropdown, setShowDropdown] = useState(false);
-    const [actionMenuUserId, setActionMenuUserId] = useState<string | null>(null); // To handle action menu visibility
-    const [filterDropdown, setFilterDropdown] = useState<string | null>(null); // To handle filter dropdown visibility
-    const [filters, setFilters] = useState({
-        organization: '',
-        username: '',
-        email: '',
-        phone: '',
-        dateJoined: '',
-        status: ''
-    });
+    const {
+        currentPage,
+        setCurrentPage,
+        showDropdown,
+        setShowDropdown,
+        actionMenuUserId,
+        setActionMenuUserId,
+        filterDropdown,
+        setFilterDropdown,
+        navigate,
+        location,
+        filters,
+        setFilters
+    } = useNavigations();
     const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
+
     const usersPerPage = 9;
-    const navigate = useNavigate();
-    const location = useLocation();
+
 
     useEffect(() => {
         setFilteredUsers(users);
@@ -60,24 +64,23 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
     };
 
     const handleActionMenuToggle = (userId: string) => {
-        setActionMenuUserId(actionMenuUserId === userId ? null : userId); // Toggle menu visibility
+        setActionMenuUserId(actionMenuUserId === userId ? null : userId);
     };
 
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const activateUser = (userId: string) => {
-        console.log(`User ${userId} activated`);
-        // Your activation logic here
-        setActionMenuUserId(null); // Close menu after action
+        setActionMenuUserId(null);
     };
 
     const blacklistUser = (userId: string) => {
         console.log(`User ${userId} blacklisted`);
-        // Your blacklist logic here
-        setActionMenuUserId(null); // Close menu after action
+        setActionMenuUserId(null);
     };
 
     const viewUserDetails = (userId: string) => {
         navigate(`/user/${userId}`);
-        setActionMenuUserId(null); // Close menu after action
+        setActionMenuUserId(null);
     };
 
     const maxPages = 10;
@@ -200,7 +203,7 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
     };
 
     return (
-        <div className="user-table_container container">
+        <div className="user-table_container container ">
             <header className="user-table_container_header">
                 <h5>{getHeaderTitle()}</h5>
                 <div className="cards">
@@ -226,114 +229,121 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
                     </div>
                 </div>
             </header>
-
-            <section className="user-table_container_body">
-                <ul className="user-table-header">
-                    {['Organization', 'Username', 'Email', 'Phone Number', 'Date Joined', 'Status'].map((header, index) => (
-                        <li key={index}>
-                            {header} <img src={filterResult} alt="showing filter icon" onClick={() => setFilterDropdown(filterDropdown === header ? null : header)} />
-                            {filterDropdown === header && (
-                                <div className="filter-dropdown">
-                                    {header === 'Organization' ? (
-                                        <select
-                                            name="organization"
-                                            value={filters.organization}
-                                            onChange={handleFilterChange}
-                                        >
-                                            <option value="">Select Organization</option>
-                                            {/* Add options dynamically based on available organizations */}
-                                            {[...new Set(users.map(user => user.profile.company))].slice(0, 10).map((organization, idx) => (
-                                                <option key={idx} value={organization}>
-                                                    {organization}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    ) : header === 'Username' ? (
-                                        <input
-                                            type="text"
-                                            name="username"
-                                            value={filters.username}
-                                            onChange={handleFilterChange}
-                                            placeholder="Username"
-                                        />
-                                    ) : header === 'Email' ? (
-                                        <input
-                                            type="email"
-                                            name="email"
-                                            value={filters.email}
-                                            onChange={handleFilterChange}
-                                            placeholder="Email"
-                                        />
-                                    ) : header === 'Phone Number' ? (
-                                        <input
-                                            type="tel"
-                                            name="phone"
-                                            value={filters.phone}
-                                            onChange={handleFilterChange}
-                                            placeholder="Phone Number"
-                                        />
-                                    ) : header === 'Date Joined' ? (
-                                        <input
-                                            type="date"
-                                            name="dateJoined"
-                                            value={filters.dateJoined}
-                                            onChange={handleFilterChange}
-                                            placeholder="Date Joined"
-                                        />
-                                    ) : header === 'Status' ? (
-                                        <select
-                                            name="status"
-                                            value={filters.status}
-                                            onChange={handleFilterChange}
-                                        >
-                                            <option value="">Select Status</option>
-                                            <option value="Active">Active</option>
-                                            <option value="Inactive">Inactive</option>
-                                            <option value="Blacklisted">Blacklisted</option>
-                                        </select>
-                                    ) : null}
-                                    <div className="btn-container">
-                                        <button onClick={resetFilters} className='btn-outline-sm btn-reset'>Reset</button>
-                                        <button onClick={applyFilters} className='btn-xsm'>Filter</button>
+            <table className="user-table_container_body table mobile-hide">
+                <thead className="user-table-header">
+                    <tr >
+                        {['Organization', 'Username', 'Email', 'Phone Number', 'Date Joined', 'Status'].map((header, index) => (
+                            <th key={index}>
+                                {header} <img src={filterResult} alt="showing filter icon" onClick={() => setFilterDropdown(filterDropdown === header ? null : header)} />
+                                {filterDropdown === header && (
+                                    <div className="filter-dropdown">
+                                        {header === 'Organization' ? (
+                                            <select
+                                                name="organization"
+                                                value={filters.organization}
+                                                onChange={handleFilterChange}
+                                            >
+                                                <option value="">Select Organization</option>
+                                                {/* Add options dynamically based on available organizations */}
+                                                {[...new Set(users.map(user => user.profile.company))].slice(0, 10).map((organization, idx) => (
+                                                    <option key={idx} value={organization}>
+                                                        {organization}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        ) : header === 'Username' ? (
+                                            <input
+                                                type="text"
+                                                name="username"
+                                                value={filters.username}
+                                                onChange={handleFilterChange}
+                                                placeholder="Username"
+                                            />
+                                        ) : header === 'Email' ? (
+                                            <input
+                                                type="email"
+                                                name="email"
+                                                value={filters.email}
+                                                onChange={handleFilterChange}
+                                                placeholder="Email"
+                                            />
+                                        ) : header === 'Phone Number' ? (
+                                            <input
+                                                type="tel"
+                                                name="phone"
+                                                value={filters.phone}
+                                                onChange={handleFilterChange}
+                                                placeholder="Phone Number"
+                                            />
+                                        ) : header === 'Date Joined' ? (
+                                            <input
+                                                type="date"
+                                                name="dateJoined"
+                                                value={filters.dateJoined}
+                                                onChange={handleFilterChange}
+                                                placeholder="Date Joined"
+                                            />
+                                        ) : header === 'Status' ? (
+                                            <select
+                                                name="status"
+                                                value={filters.status}
+                                                onChange={handleFilterChange}
+                                            >
+                                                <option value="">Select Status</option>
+                                                <option value="Active">Active</option>
+                                                <option value="Inactive">Inactive</option>
+                                                <option value="Blacklisted">Blacklisted</option>
+                                            </select>
+                                        ) : null}
+                                        <div className="btn-container">
+                                            <button onClick={resetFilters} className='btn-outline-sm btn-reset'>Reset</button>
+                                            <button onClick={applyFilters} className='btn-xsm'>Filter</button>
+                                        </div>
                                     </div>
+                                )}
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+
+                <tbody className="user-table-row">
+                    {currentUsers.map((user) => (
+                        <tr key={user.id}>
+                            <td>{user.profile.company}</td>
+                            <td>{user.username}</td>
+                            <td className="email">{user.email}</td>
+                            <td className="phone">{user.phone || 'N/A'}</td>
+                            <td>{new Date(user.createdAt).toLocaleDateString()}</td>
+                            <td>
+                                <button className={getStatusClassName(user.status || '')}>{user.status}</button>
+                            </td>
+                            <td className="edit-button">
+                                <div className='edit-btn_hover'>
+                                    <img
+                                        onClick={() => handleActionMenuToggle(user.id)}
+                                        src={icMore}
+                                        alt="action"
+                                    />
+                                    {/* {actionMenuUserId === user.id && ( */}
+                                    <ul className="action-menu">
+                                        <li onClick={() => activateUser(user.id)}>
+                                            <NavLink to='#'> <img src={eye} alt="" /> Activate</NavLink>
+                                        </li>
+                                        <li onClick={() => blacklistUser(user.id)}>
+                                            <NavLink to="#"> <img src={delete_friend} alt="" /> Blacklist</NavLink>
+                                        </li>
+                                        <li onClick={() => viewUserDetails(user.id)}>
+                                            <NavLink to="#"><img src={checkuser} alt="" /> View Details</NavLink>
+                                        </li>
+                                    </ul>
                                 </div>
-                            )}
-                        </li>
+                                {/* )} */}
+                            </td>
+                        </tr>
                     ))}
-                </ul>
-
-                {currentUsers.map((user) => (
-                    <ul key={user.id} className="user-table-row">
-                        <li>{user.profile.company}</li>
-                        <li>{user.username}</li>
-                        <li className="email">{user.email}</li>
-                        <li className="phone">{user.phone || 'N/A'}</li>
-                        <li>{new Date(user.createdAt).toLocaleDateString()}</li>
-                        <li className={getStatusClassName(user.status || '')}>{user.status}</li>
-                        <li className="edit-button">
-                            <img
-                                onClick={() => handleActionMenuToggle(user.id)}
-                                src={icMore}
-                                alt="action"
-                            />
-                            {actionMenuUserId === user.id && (
-                                <ul className="action-menu">
-                                    <li onClick={() => activateUser(user.id)}>
-                                        <NavLink to='#'> <img src={eye} alt="" /> Activate</NavLink>
-                                    </li>
-                                    <li onClick={() => blacklistUser(user.id)}>
-                                        <NavLink to="#"> <img src={delete_friend} alt="" /> Blacklist</NavLink>
-                                    </li>
-                                    <li onClick={() => viewUserDetails(user.id)}>
-                                        <NavLink to="#"><img src={checkuser} alt="" /> View Details</NavLink>
-                                    </li>
-                                </ul>
-                            )}
-                        </li>
-                    </ul>
-                ))}
-            </section>
-
+                </tbody>
+            </table>
+            <UserTableMobile users={currentUsers} />
             <div className='user-table_container_pagination_controls'>
                 {/* Pagination Button with Dropdown */}
                 <div className="user-table_container_pagination_controls_dropdown">
