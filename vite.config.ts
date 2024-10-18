@@ -35,6 +35,7 @@ export default defineConfig({
   build: {
     sourcemap: process.env.VITE_SOURCEMAP === 'true',
     outDir: process.env.VITE_OUTPUT_DIR || 'dist',
+    minify: 'terser',
   },
   css: {
     preprocessorOptions: {
