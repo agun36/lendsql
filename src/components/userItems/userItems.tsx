@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { UserTableProps } from '../../types/asideType';
 import './userItem.scss';
 import arrowBack from '../../assets/image/backArrow.svg';
@@ -12,10 +12,16 @@ const UserList: React.FC<UserTableProps> = ({ users }) => {
     const { userId } = useParams<{ userId: string }>();
     const user = users.find(user => user.id === userId);
     const [activeTab, setActiveTab] = useState('general');
+    const navigate = useNavigate();
+
 
     if (!user) {
         return <div>User not found</div>;
     }
+
+    const handleBackClick = () => {
+        navigate('/customers/users');
+    };
 
     const renderStars = (rating: number) => {
         const fullStars = Math.floor(rating);
@@ -193,7 +199,7 @@ const UserList: React.FC<UserTableProps> = ({ users }) => {
 
     return (
         <div className="user-details_container">
-            <div className="back_to_users">
+            <div className="back_to_users" onClick={handleBackClick}>
                 <img src={arrowBack} alt="Back to Users" />
                 <p>Back to Users</p>
             </div>

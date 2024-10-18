@@ -5,7 +5,7 @@ import UserTable from '../../components/userTable/userTable';
 import { User, UserTableProps } from '../../types/asideType';
 
 const statuses = ["Active", "Inactive", "Pending", "Blacklisted"];
-const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_REACT_VITE_TOKEN;
+const dataToken = import.meta.env.PROD ? null : import.meta.env.VITE_API_KEY;
 
 const Users: React.FC<UserTableProps> = ({ setUsers, filteredUsers, setFilteredUsers }) => {
     const [loading, setLoading] = useState(true);
@@ -13,24 +13,31 @@ const Users: React.FC<UserTableProps> = ({ setUsers, filteredUsers, setFilteredU
 
     useEffect(() => {
         const fetchUsers = async () => {
+            const apiUrl = import.meta.env.VITE_API_URL;
+
+            if (!apiUrl) {
+                console.error('API URL is undefined');
+                setError('API URL is undefined.');
+                setLoading(false);
+                return;
+            }
+
             try {
-                const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
                 console.log('API URL:', apiUrl);
-                const response = await axios.get<User[]>(
-                    apiUrl!,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${dataToken}`,
-                        },
-                    }
-                );
+                const response = await axios.get<User[]>(apiUrl, {
+                    headers: {
+                        Authorization: `Bearer ${dataToken}`,
+                    },
+                });
                 console.log('Response:', response);
+
                 const usersWithStatus = response.data.map((user: User) => ({
                     ...user,
                     status: user.status || statuses[Math.floor(Math.random() * statuses.length)],
                     hasLoan: user.hasLoan || false,
                     hasSaving: user.hasSaving || false,
                 }));
+
                 setUsers(usersWithStatus);
                 setFilteredUsers(usersWithStatus);
                 setLoading(false);
@@ -43,6 +50,7 @@ const Users: React.FC<UserTableProps> = ({ setUsers, filteredUsers, setFilteredU
 
         fetchUsers();
     }, [setUsers, setFilteredUsers]);
+
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>{error}</div>;
