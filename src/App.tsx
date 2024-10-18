@@ -106,6 +106,7 @@ const AppContent: React.FC<{
             <Route path='/settings/fees-and-pricing' element={<Placeholder pageName={'Fees & Pricing'} />} />
             <Route path='/settings/audit-logs' element={<Placeholder pageName={'Audit Logs'} />} />
             <Route path='/settings/tires' element={<Placeholder pageName={'Tires'} />} />
+            <Route path='*' element={<Placeholder pageName={'Page Not Found'} />} />
           </Routes>
         </div>
       </div>
