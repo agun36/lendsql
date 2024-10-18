@@ -21,6 +21,11 @@
 
     }
 
+    @media (max-width: 768px) {
+        padding: 0rem;
+
+    }
+
     &-nav {
         display: flex;
         flex-wrap: wrap;
