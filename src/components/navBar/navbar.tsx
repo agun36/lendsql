@@ -44,6 +44,7 @@ export default function Navigator({ users, setFilteredUsers }: NavigatorProps) {
     const toggleMobileAside = () => {
         setIsMobileAsideVisible(prevState => !prevState);
     };
+    const truncatedUsername = username && username.length > 4 ? `${username.substring(0, 4)}...` : username;
 
     return (
         <div className="container">
@@ -66,7 +67,7 @@ export default function Navigator({ users, setFilteredUsers }: NavigatorProps) {
                     <a href="#" className='header-profile-doc mobile-hide'> Doc</a>
                     <img src={notify} alt="notify the users" className='header-profile-notify mobile-hide' />
                     <img src={profile} alt="showing profile users" className="header-profile-avater mobile-hide" />
-                    <p className='mobile-hide'>{username} <img src={dropdown} alt="showing logout button" onClick={handleLogout} /></p>
+                    <p className='header-nav__trunc'>{truncatedUsername} <img src={dropdown} alt="showing logout button" onClick={handleLogout} /></p>
                     <p className="header-nav_hamburger mobile-show" onClick={toggleMobileAside}>
                         <FontAwesomeIcon icon={isMobileAsideVisible ? faTimes : faBars} className='header-nav_hamburger_icon' />
                     </p>

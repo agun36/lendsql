@@ -42,6 +42,7 @@
             display: none;
 
 
+
             @media screen and (max-width: 1200px) {
                 display: block;
                 position: absolute;
@@ -126,15 +127,30 @@
             line-height: 1.877rem;
             display: flex;
             align-items: center;
+
+        }
+
+        .header-nav__trunc {
+            @media (max-width: 1000px) {
+                font-size: 2rem;
+                position: absolute;
+                right: 7rem;
+            }
         }
 
         .header-nav_hamburger {
             color: $primary-000;
+            font-size: 3rem;
 
             &.header-nav_hamburger_icon {
                 color: $primary-000;
             }
 
+            @media (max-width: 1000px) {
+                font-size: 2rem;
+                position: absolute;
+                right: 0;
+            }
 
         }
     }
