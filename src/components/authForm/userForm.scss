@@ -10,6 +10,11 @@
         flex-direction: column;
         gap: 2rem;
 
+        @media (max-width: 1000px) {
+            align-items: center;
+
+        }
+
         h1 {
             font-family: Avenir Next;
             font-size: 4rem;
