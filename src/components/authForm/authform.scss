@@ -1,10 +1,10 @@
 @import '../../assets/styles/variables/variables';
 
-.authform-user_form__details {
+.authform-user__form-details {
     display: flex;
-    // justify-content: space-evenly;
-    align-items: center;
-    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
     font-family: $lendsqr_regular;
 
     .pablo-wrapper {
@@ -12,32 +12,49 @@
         flex-direction: column;
         min-width: 50%;
 
-        .pablo-wrapper-logo {
-            position: absolute;
-            width: 17.376rem;
-            height: 3.6rem;
-            top: 10.6rem;
-            left: 15rem;
-            object-fit: background-cover;
+        @media (max-width: 900px) {
+            flex-direction: column;
+        }
 
-            @media(max-width: 1000px) {
-                top: 2rem;
-                left: 10rem;
+        .pablo-wrapper-logo {
+            margin-bottom: 4rem;
+
+            .pablo-wrapper-logo-img {
+                width: 17.376rem;
+                height: 3.6rem;
+
+                @media(max-width: 1000px) {
+                    display: none;
+                }
             }
         }
 
         .pablo-login {
             width: 60rem;
             height: 33.757rem;
+            display: flex; // Ensure it is displayed with UserForm
 
             @media(max-width: 1000px) {
                 width: 100%;
                 object-fit: cover;
+                display: none;
+            }
+        }
+
+        .flex-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+
+            @media (max-width: 1000px) {
+                flex-wrap: wrap;
+                min-height: 100%;
             }
         }
     }
 
     @media (max-width: 1000px) {
         flex-wrap: wrap;
+        min-height: 100%;
     }
 }
